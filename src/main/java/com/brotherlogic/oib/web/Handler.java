@@ -131,7 +131,7 @@ public class Handler extends HttpServlet
    private String getDirections(double latStart, double lonStart, double latEnd, double lonEnd)
    {
       String res2 = "https://maps.google.com/maps?q=" + latStart + "," + lonStart + "+to+" + latEnd
-            + "," + lonEnd + "&drflg=w";
+            + "," + lonEnd + "&dirflg=w";
       return res2;
    }
 }
