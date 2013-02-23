@@ -142,6 +142,9 @@ public class Database
                art.setLongitude(instImg.get("location").getAsJsonObject().get("longitude")
                      .getAsDouble());
                art.setSource("Instagram");
+
+               System.out.println(art.getArtist() + " " + art.getLatitude() + " and "
+                     + art.getLongitude());
                allArt.add(art);
             }
          }
@@ -152,10 +155,9 @@ public class Database
       }
    }
 
-   private double computeDist(Art a1, Art a2)
+   private double computeDist(double lat, double lon, Art a1)
    {
-      return Math.sqrt(Math.pow(a1.getLatitude() - a2.getLatitude(), 2)
-            + Math.pow(a1.getLongitude() - a2.getLongitude(), 2));
+      return Math.sqrt(Math.pow(a1.getLatitude() - lat, 2) + Math.pow(a1.getLongitude() - lon, 2));
    }
 
    public Art getClosestArt(double lat, double lon)
@@ -164,7 +166,7 @@ public class Database
       double bestDist = Double.MAX_VALUE;
       for (Art art : allArt.subList(1, allArt.size()))
       {
-         double dist = computeDist(art, best);
+         double dist = computeDist(lat, lon, art);
          if (dist < bestDist)
          {
             bestDist = dist;
