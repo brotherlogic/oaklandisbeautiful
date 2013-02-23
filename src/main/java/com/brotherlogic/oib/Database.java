@@ -139,7 +139,7 @@ public class Database
                      .getAsJsonObject().get("url").getAsString());
                art.setLatitude(instImg.get("location").getAsJsonObject().get("latitude")
                      .getAsDouble());
-               art.setLatitude(instImg.get("location").getAsJsonObject().get("longitude")
+               art.setLongitude(instImg.get("location").getAsJsonObject().get("longitude")
                      .getAsDouble());
                art.setSource("Instagram");
                allArt.add(art);
