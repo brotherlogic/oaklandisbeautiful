@@ -94,6 +94,7 @@ public class Database
 
       addFlickrImages();
       addInstagramImages();
+      addTwitterImages();
    }
 
    private void addFlickrImages()
@@ -143,8 +144,45 @@ public class Database
                      .getAsDouble());
                art.setSource("Instagram");
 
-               System.out.println(art.getArtist() + " " + art.getLatitude() + " and "
-                     + art.getLongitude());
+               allArt.add(art);
+            }
+         }
+      }
+      catch (Exception e)
+      {
+         e.printStackTrace();
+      }
+   }
+
+   private void addTwitterImages()
+   {
+      String url = "http://search.twitter.com/search.json?q=oaklandart&results_per_page=500";
+      String json = "";
+      try
+      {
+         BufferedReader reader = new BufferedReader(
+               new InputStreamReader(new URL(url).openStream()));
+         for (String line = reader.readLine(); line != null; line = reader.readLine())
+            json += line + "\n";
+         reader.close();
+
+         JsonObject obj = new JsonParser().parse(json).getAsJsonObject();
+
+         JsonArray arr = obj.getAsJsonArray("results");
+         for (int i = 0; i < arr.size(); i++)
+         {
+            JsonObject tweet = arr.get(i).getAsJsonObject();
+            if (tweet != null && !tweet.get("geo").isJsonNull())
+            {
+               Art art = new Art();
+               art.setTitle(tweet.get("text").getAsString());
+               art.setArtist(tweet.get("from_user_name").getAsString());
+               art.setLatitude(tweet.get("geo").getAsJsonObject().get("coordinates")
+                     .getAsJsonArray().get(0).getAsDouble());
+               art.setLongitude(tweet.get("geo").getAsJsonObject().get("coordinates")
+                     .getAsJsonArray().get(1).getAsDouble());
+               art.setSource("Twitter");
+
                allArt.add(art);
             }
          }
