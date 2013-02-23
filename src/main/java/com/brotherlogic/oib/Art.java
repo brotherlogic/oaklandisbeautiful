@@ -5,10 +5,12 @@ import java.io.Serializable;
 public class Art implements Serializable
 {
    String address;
-   String artist;
+   String artist = "";
    double latitude;
    double longitude;
-   String title;
+   String source = "";
+   String title = "";
+   String url = "";
 
    public Art()
    {
@@ -35,9 +37,19 @@ public class Art implements Serializable
       return longitude;
    }
 
+   public String getSource()
+   {
+      return source;
+   }
+
    public String getTitle()
    {
       return title;
+   }
+
+   public String getUrl()
+   {
+      return url;
    }
 
    public void setAddress(String address)
@@ -60,8 +72,18 @@ public class Art implements Serializable
       this.longitude = longitude;
    }
 
+   public void setSource(String source)
+   {
+      this.source = source;
+   }
+
    public void setTitle(String title)
    {
       this.title = title;
+   }
+
+   public void setUrl(String url)
+   {
+      this.url = url;
    }
 }

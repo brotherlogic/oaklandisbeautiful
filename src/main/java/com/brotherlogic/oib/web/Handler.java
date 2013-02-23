@@ -71,7 +71,22 @@ public class Handler extends HttpServlet
       if (req.getParameter("action") == null)
       {
          // Deliver the index page
-         deliverPage("index.html", new HashMap<String, Object>(), resp);
+         HashMap<String, Object> sMap = new HashMap<String, Object>();
+         sMap.put("amount", Database.getInstance().getSize());
+         deliverPage("index.html", sMap, resp);
+      }
+      else if (req.getParameter("action").equals("newart"))
+      {
+         deliverPage("addlocate.html", new HashMap<String, Object>(), resp);
+      }
+      else if (req.getParameter("action").equals("doadd"))
+      {
+         double lat = Double.parseDouble(req.getParameter("lat"));
+         double lon = Double.parseDouble(req.getParameter("lon"));
+         Map<String, Object> addMap = new HashMap<String, Object>();
+         addMap.put("lat", lat);
+         addMap.put("lon", lon);
+         deliverPage("addart.html", addMap, resp);
       }
       else if (req.getParameter("action").equals("findme"))
       {
@@ -92,6 +107,8 @@ public class Handler extends HttpServlet
          artMap.put("artist", closest.getArtist());
          artMap.put("directions",
                getDirections(lat, lon, closest.getLatitude(), closest.getLongitude()));
+         artMap.put("url", closest.getUrl());
+         artMap.put("source", closest.getSource());
          deliverPage("artpage.html", artMap, resp);
       }
       else if (req.getParameter("action").equals("randomart"))
@@ -105,6 +122,8 @@ public class Handler extends HttpServlet
          artMap.put("artist", closest.getArtist());
          artMap.put("directions",
                getDirections(lat, lon, closest.getLatitude(), closest.getLongitude()));
+         artMap.put("url", closest.getUrl());
+         artMap.put("source", closest.getSource());
          deliverPage("artpage.html", artMap, resp);
       }
    }
@@ -112,7 +131,7 @@ public class Handler extends HttpServlet
    private String getDirections(double latStart, double lonStart, double latEnd, double lonEnd)
    {
       String res2 = "https://maps.google.com/maps?q=" + latStart + "," + lonStart + "+to+" + latEnd
-            + "," + lonEnd;
+            + "," + lonEnd + "&drflg=w";
       return res2;
    }
 }
