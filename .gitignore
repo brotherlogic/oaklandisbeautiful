@@ -1,0 +1,8 @@
+picker*.db
+target/
+*~
+.settings
+.project
+.classpath
+.checkstyle
+config.*
