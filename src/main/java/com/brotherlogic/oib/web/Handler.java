@@ -77,12 +77,29 @@ public class Handler extends HttpServlet
       {
          deliverPage("locator.html", new HashMap<String, Object>(), resp);
       }
+      else if (req.getParameter("action").equals("randme"))
+      {
+         deliverPage("random.html", new HashMap<String, Object>(), resp);
+      }
       else if (req.getParameter("action").equals("findart"))
       {
          double lat = Double.parseDouble(req.getParameter("lat"));
          double lon = Double.parseDouble(req.getParameter("lon"));
 
-         Art closest = new Database().getClosestArt(lat, lon);
+         Art closest = Database.getInstance().getClosestArt(lat, lon);
+         Map<String, Object> artMap = new HashMap<String, Object>();
+         artMap.put("title", closest.getTitle());
+         artMap.put("artist", closest.getArtist());
+         artMap.put("directions",
+               getDirections(lat, lon, closest.getLatitude(), closest.getLongitude()));
+         deliverPage("artpage.html", artMap, resp);
+      }
+      else if (req.getParameter("action").equals("randomart"))
+      {
+         double lat = Double.parseDouble(req.getParameter("lat"));
+         double lon = Double.parseDouble(req.getParameter("lon"));
+
+         Art closest = Database.getInstance().getRandomArt();
          Map<String, Object> artMap = new HashMap<String, Object>();
          artMap.put("title", closest.getTitle());
          artMap.put("artist", closest.getArtist());
