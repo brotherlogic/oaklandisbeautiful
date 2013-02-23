@@ -4,7 +4,7 @@ package com.brotherlogic.oib;
  * Hello world!
  *
  */
-public class App 
+public class Database 
 {
     public static void main( String[] args )
     {
