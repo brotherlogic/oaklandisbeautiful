@@ -1,0 +1,19 @@
+<HTML>
+<BODY>
+<SCRIPT>
+navigator.geolocation.getCurrentPosition(locationSuccess, locationFail);
+
+function locationSuccess(position)
+{
+	latitude = position.coords.latitude;
+    longitude = position.coords.longitude;
+    window.location.href='?action=findart&lat=' + latitude + '&lon=' + longitude;
+}
+
+function locationFail() 
+{
+	alert('Oops, could not find you.');
+} 
+</SCRIPT>
+</BODY>
+</HTML>    

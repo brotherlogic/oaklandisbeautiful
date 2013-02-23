@@ -12,7 +12,7 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>3.8.1</version>
+      <version>4.11</version>
       <scope>test</scope>
     </dependency>
 
@@ -25,9 +25,21 @@
    <dependency>
      <groupId>org.tuckey</groupId>
      <artifactId>urlrewritefilter</artifactId>
-     <version>4.0.3</version>
+     <version>4.0.4</version>
    </dependency>
 
+   <dependency>
+     <groupId>org.freemarker</groupId>
+     <artifactId>freemarker</artifactId>
+     <version>2.3.19</version>
+   </dependency>
+
+   <dependency>
+     <groupId>org.mongodb</groupId>
+     <artifactId>mongo-java-driver</artifactId>
+     <version>2.2</version>
+   </dependency>
+   
   </dependencies>
 
  <build>
@@ -55,7 +67,7 @@
           </execution>
         </executions>
         <configuration>
-          <mainClass>com.brotherlogic.beer.Checker</mainClass>
+          <mainClass>com.brotherlogic.oib.Database</mainClass>
 	  </configuration>
       </plugin>
 
@@ -71,6 +83,8 @@
           <contextPath>/</contextPath>
         </configuration>
       </plugin>
+
+
 
     </plugins>
  </build>
