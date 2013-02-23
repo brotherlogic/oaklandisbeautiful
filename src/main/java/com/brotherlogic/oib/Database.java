@@ -130,13 +130,20 @@ public class Database
          for (int i = 0; i < arr.size(); i++)
          {
             JsonObject instImg = arr.get(i).getAsJsonObject();
-            Art art = new Art();
-            art.setTitle(instImg.get("caption").getAsJsonObject().get("text").getAsString());
-            art.setArtist(instImg.get("user").getAsJsonObject().get("username").getAsString());
-            art.setUrl(instImg.get("images").getAsJsonObject().get("standard_resolution")
-                  .getAsJsonObject().get("url").getAsString());
-            art.setSource("Instagram");
-            allArt.add(art);
+            if (instImg != null && !instImg.get("location").isJsonNull())
+            {
+               Art art = new Art();
+               art.setTitle(instImg.get("caption").getAsJsonObject().get("text").getAsString());
+               art.setArtist(instImg.get("user").getAsJsonObject().get("username").getAsString());
+               art.setUrl(instImg.get("images").getAsJsonObject().get("standard_resolution")
+                     .getAsJsonObject().get("url").getAsString());
+               art.setLatitude(instImg.get("location").getAsJsonObject().get("latitude")
+                     .getAsDouble());
+               art.setLatitude(instImg.get("location").getAsJsonObject().get("longitude")
+                     .getAsDouble());
+               art.setSource("Instagram");
+               allArt.add(art);
+            }
          }
       }
       catch (Exception e)
