@@ -44,7 +44,7 @@ public class Art implements Serializable
 
    public String getTitle()
    {
-      return title;
+      return title.replace("\"", "").replace("'", "");
    }
 
    public String getUrl()

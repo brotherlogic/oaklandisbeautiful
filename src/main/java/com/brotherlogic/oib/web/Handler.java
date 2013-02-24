@@ -17,7 +17,7 @@ import com.brotherlogic.oib.Art;
 import com.brotherlogic.oib.Database;
 
 import freemarker.template.Configuration;
-import freemarker.template.SimpleObjectWrapper;
+import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
@@ -33,7 +33,7 @@ public class Handler extends HttpServlet
          TemplateException
    {
       Configuration cfg = new freemarker.template.Configuration();
-      cfg.setObjectWrapper(new SimpleObjectWrapper());
+      cfg.setObjectWrapper(new DefaultObjectWrapper());
 
       BufferedReader reader = new BufferedReader(new InputStreamReader(this.getClass()
             .getResourceAsStream(templateFile)));
@@ -75,6 +75,20 @@ public class Handler extends HttpServlet
          sMap.put("amount", Database.getInstance().getSize());
          deliverPage("index.html", sMap, resp);
       }
+      else if (req.getParameter("action").equals("mapper"))
+      {
+         deliverPage("mapper.html", new HashMap<String, Object>(), resp);
+      }
+      else if (req.getParameter("action").equals("map"))
+      {
+         double lat = Double.parseDouble(req.getParameter("lat"));
+         double lon = Double.parseDouble(req.getParameter("lon"));
+         HashMap<String, Object> mapper = new HashMap<String, Object>();
+         mapper.put("arts", Database.getInstance().getArts());
+         mapper.put("lat", lat);
+         mapper.put("lon", lon);
+         deliverPage("map.html", mapper, resp);
+      }
       else if (req.getParameter("action").equals("newart"))
       {
          deliverPage("addlocate.html", new HashMap<String, Object>(), resp);
@@ -111,12 +125,27 @@ public class Handler extends HttpServlet
          artMap.put("source", closest.getSource());
          deliverPage("artpage.html", artMap, resp);
       }
-      else if (req.getParameter("action").equals("randomart"))
+      else if (req.getParameter("action").equals("findart"))
       {
          double lat = Double.parseDouble(req.getParameter("lat"));
          double lon = Double.parseDouble(req.getParameter("lon"));
 
-         Art closest = Database.getInstance().getRandomArt();
+         Art closest = Database.getInstance().getClosestArt(lat, lon);
+         Map<String, Object> artMap = new HashMap<String, Object>();
+         artMap.put("title", closest.getTitle());
+         artMap.put("artist", closest.getArtist());
+         artMap.put("directions",
+               getDirections(lat, lon, closest.getLatitude(), closest.getLongitude()));
+         artMap.put("url", closest.getUrl());
+         artMap.put("source", closest.getSource());
+         deliverPage("artpage.html", artMap, resp);
+      }
+      else if (req.getParameter("action").equals("showart"))
+      {
+         double lat = Double.parseDouble(req.getParameter("lat"));
+         double lon = Double.parseDouble(req.getParameter("lon"));
+
+         Art closest = Database.getInstance().getArt(req.getParameter("title"));
          Map<String, Object> artMap = new HashMap<String, Object>();
          artMap.put("title", closest.getTitle());
          artMap.put("artist", closest.getArtist());

@@ -198,6 +198,19 @@ public class Database
       return Math.sqrt(Math.pow(a1.getLatitude() - lat, 2) + Math.pow(a1.getLongitude() - lon, 2));
    }
 
+   public Art getArt(String title)
+   {
+      for (Art art : allArt)
+         if (art.getTitle().equals(title))
+            return art;
+      return null;
+   }
+
+   public List<Art> getArts()
+   {
+      return allArt;
+   }
+
    public Art getClosestArt(double lat, double lon)
    {
       Art best = allArt.get(0);
