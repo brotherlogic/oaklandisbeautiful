@@ -125,12 +125,12 @@ public class Handler extends HttpServlet
          artMap.put("source", closest.getSource());
          deliverPage("artpage.html", artMap, resp);
       }
-      else if (req.getParameter("action").equals("findart"))
+      else if (req.getParameter("action").equals("randomart"))
       {
          double lat = Double.parseDouble(req.getParameter("lat"));
          double lon = Double.parseDouble(req.getParameter("lon"));
 
-         Art closest = Database.getInstance().getClosestArt(lat, lon);
+         Art closest = Database.getInstance().getRandomArt();
          Map<String, Object> artMap = new HashMap<String, Object>();
          artMap.put("title", closest.getTitle());
          artMap.put("artist", closest.getArtist());
